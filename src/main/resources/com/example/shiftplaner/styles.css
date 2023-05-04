@@ -1,0 +1,17 @@
+
+.hoverBtn:hover {
+    -fx-background-color: #6D326D;
+    -fx-text-fill: #FFFFFF;
+    shadow: true;
+}
+
+.planerPanel{
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #6D326D;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    }
+
+
