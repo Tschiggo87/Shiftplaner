@@ -1,33 +1,23 @@
 package com.example.shiftplaner.controller;
 
-
-
-import com.example.shiftplaner.model.Mitarbeiter;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 import java.net.URL;
-import java.text.BreakIterator;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 import java.util.*;
 import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 
 public class MenuButtonController implements Initializable {
@@ -121,16 +111,15 @@ public class MenuButtonController implements Initializable {
     @FXML
     private ComboBox<String> schichtComboBox13;
     @FXML
-    private ComboBox<String> getSchichtComboBox13;
-    @FXML
     private ComboBox<String> schichtComboBox14;
-
-    @FXML
-    private TextField employeeNameField;
     @FXML
     public Button mitarbeiterButton;
     @FXML
     public Button schichtButton;
+    @FXML
+    public Button saveButton;
+    @FXML
+    private GridPane gridPane;
 
 
 
@@ -139,9 +128,11 @@ public class MenuButtonController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        // Initialisierung des gridPane-Objekts
+        gridPane = new GridPane();
+
         // Fügen Sie alle namenComboBox-Elemente zur Liste hinzu
         List<ComboBox<String>> comboBoxes = Arrays.asList(nameComboBox1,nameComboBox2,nameComboBox3,nameComboBox4,nameComboBox5,nameComboBox6,nameComboBox7,nameComboBox8,nameComboBox9,nameComboBox10,nameComboBox11,nameComboBox12,nameComboBox13,nameComboBox14,nameComboBox15);
-
         for (ComboBox<String> comboBox : comboBoxes) {
             bindComboBoxToMitarbeiterList(comboBox);
         }
@@ -173,13 +164,15 @@ public class MenuButtonController implements Initializable {
         });
 
         mitarbeiterButton.setOnAction(event -> {
-            System.out.println("Mitarbeiter hinzugefügt");
             openAddMitarbeiterWindow();
         });
 
         schichtButton.setOnAction(event -> {
-            System.out.println("Schicht hinzugefügt");
             openAddSchichtWindow();
+        });
+
+        saveButton.setOnAction(event -> {
+            saveGridPane();
         });
     }
 
@@ -237,7 +230,7 @@ public class MenuButtonController implements Initializable {
         Button saveBtn = new Button("Speichern");
         Label label = new Label("Mitarbeitername");
         TextField textField = new TextField ();
-        textField.setPrefWidth(100);
+        textField.setPrefWidth(10);
 
         // Erstellen Sie das Label, das die Bestätigungsnachricht anzeigen wird
         Label confirmationLabel = new Label();
@@ -299,22 +292,21 @@ public class MenuButtonController implements Initializable {
     }
 
 
-    @FXML
-    public void addEmployee(ActionEvent event) {
+    public void saveGridPane() {
+        List<List<String>> comboBoxValues = new ArrayList<>();
 
-        String employeeName = employeeNameField.getText(); // Mitarbeitername aus dem Textfeld lesen
-
-        // Überprüfen, ob der Mitarbeitername nicht leer ist
-        if (!employeeName.isEmpty()) {
-            Collection<String> employeeNameList = nameComboBox1.getItems();
-            employeeNameList.add(employeeName); // Mitarbeiter zur Liste hinzufügen
-
-            // Mitarbeiterliste in der ComboBox aktualisieren
-            nameComboBox1.setItems(FXCollections.observableArrayList(employeeNameList));
-
-            // Optional: Textfeld leeren
-            employeeNameField.clear();
+        for (Node node : gridPane.getChildren()) {
+            if (node instanceof ComboBox) {
+                ComboBox<String> comboBox = (ComboBox<String>) node;
+                String selectedValue = comboBox.getValue();
+                List<String> rowValues = new ArrayList<>();
+                rowValues.add(selectedValue);
+                comboBoxValues.add(rowValues);
+            }
         }
+
+        // Hier kannst du die comboBoxValues-Datenstruktur weiterverarbeiten oder speichern
+
     }
 
 
