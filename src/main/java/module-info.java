@@ -5,4 +5,6 @@ module com.example.shiftplaner {
                             
     opens com.example.shiftplaner to javafx.fxml;
     exports com.example.shiftplaner;
+    exports com.example.shiftplaner.controller;
+    opens com.example.shiftplaner.controller to javafx.fxml;
 }

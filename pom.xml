@@ -36,7 +36,28 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
-    </dependency>              </dependencies>
+    </dependency>
+      <dependency>
+          <groupId>antlr</groupId>
+          <artifactId>antlr</artifactId>
+          <version>2.7.2</version>
+      </dependency>
+      <dependency>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-controls</artifactId>
+          <version>20-ea+4</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/com.google.firebase/firebase-admin -->
+      <dependency>
+          <groupId>com.google.firebase</groupId>
+          <artifactId>firebase-admin</artifactId>
+          <version>9.1.1</version>
+      </dependency>
+
+
+
+  </dependencies>
 
   <build>
         <plugins>
@@ -58,7 +79,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>com.example.shiftplaner/com.example.shiftplaner.HelloApplication</mainClass>
+              <mainClass>com.example.shiftplaner/com.example.shiftplaner.Main</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
