@@ -34,7 +34,8 @@ public class MenuButtonController implements Initializable {
     // Definiere einen DateTimeFormatter für das Format "dd.MM.yyyy"
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yy");
     private ObservableList<String> mitarbeiterList = FXCollections.observableArrayList();
-    private List<ComboBox<String>> comboBoxList;
+    private ObservableList<String> schichtList = FXCollections.observableArrayList();
+
 
     // FXML-Elemente, auf die der Controller zugreift
     @FXML
@@ -94,9 +95,42 @@ public class MenuButtonController implements Initializable {
     @FXML
     private ComboBox<String> nameComboBox15;
     @FXML
+    private ComboBox<String> schichtComboBox1;
+    @FXML
+    private ComboBox<String> schichtComboBox2;
+    @FXML
+    private ComboBox<String> schichtComboBox3;
+    @FXML
+    private ComboBox<String> schichtComboBox4;
+    @FXML
+    private ComboBox<String> schichtComboBox5;
+    @FXML
+    private ComboBox<String> schichtComboBox6;
+    @FXML
+    private ComboBox<String> schichtComboBox7;
+    @FXML
+    private ComboBox<String> schichtComboBox8;
+    @FXML
+    private ComboBox<String> schichtComboBox9;
+    @FXML
+    private ComboBox<String> schichtComboBox10;
+    @FXML
+    private ComboBox<String> schichtComboBox11;
+    @FXML
+    private ComboBox<String> schichtComboBox12;
+    @FXML
+    private ComboBox<String> schichtComboBox13;
+    @FXML
+    private ComboBox<String> getSchichtComboBox13;
+    @FXML
+    private ComboBox<String> schichtComboBox14;
+
+    @FXML
     private TextField employeeNameField;
     @FXML
     public Button mitarbeiterButton;
+    @FXML
+    public Button schichtButton;
 
 
 
@@ -105,14 +139,19 @@ public class MenuButtonController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        // Fügen Sie alle ComboBox-Elemente zur Liste hinzu
+        // Fügen Sie alle namenComboBox-Elemente zur Liste hinzu
         List<ComboBox<String>> comboBoxes = Arrays.asList(nameComboBox1,nameComboBox2,nameComboBox3,nameComboBox4,nameComboBox5,nameComboBox6,nameComboBox7,nameComboBox8,nameComboBox9,nameComboBox10,nameComboBox11,nameComboBox12,nameComboBox13,nameComboBox14,nameComboBox15);
 
         for (ComboBox<String> comboBox : comboBoxes) {
             bindComboBoxToMitarbeiterList(comboBox);
         }
 
-        nameComboBox1.itemsProperty().bind(new SimpleListProperty<>(mitarbeiterList));
+        // Füge alle schichtComboBoxen zur Liste hinzu
+        List<ComboBox<String>> schichtComboBoxe = Arrays.asList(schichtComboBox1,schichtComboBox2,schichtComboBox3,schichtComboBox4,schichtComboBox5,schichtComboBox6,schichtComboBox7,schichtComboBox8,schichtComboBox9,schichtComboBox10,schichtComboBox11,schichtComboBox12,schichtComboBox13,schichtComboBox14);
+        for (ComboBox<String> comboBox : schichtComboBoxe) {
+            bindComboBoxToSchichtList(comboBox);
+        }
+
 
         currentDate = LocalDate.now(); // Setze das aktuelle Datum
         updateWeekNumber(); // Aktualisiere die Woche und die Datumsangaben in der UI
@@ -138,8 +177,10 @@ public class MenuButtonController implements Initializable {
             openAddMitarbeiterWindow();
         });
 
-
-
+        schichtButton.setOnAction(event -> {
+            System.out.println("Schicht hinzugefügt");
+            openAddSchichtWindow();
+        });
     }
 
     // Diese Methode aktualisiert die Woche und die Datumsangaben in der UI
@@ -184,8 +225,11 @@ public class MenuButtonController implements Initializable {
         comboBox.itemsProperty().bind(new SimpleListProperty<>(mitarbeiterList));
     }
 
-    // Diese Methode wird aufgerufen, wenn der Button "Mitarbeiter hinzufügen" gedrückt wird
+    private void bindComboBoxToSchichtList(ComboBox<String> comboBox) {
+        comboBox.itemsProperty().bind(new SimpleListProperty<>(schichtList));
+    }
 
+    // Diese Methode wird aufgerufen, wenn der Button "Mitarbeiter hinzufügen" gedrückt wird
     public void openAddMitarbeiterWindow() {
         Stage stage = new Stage();
         stage.setTitle("Mitarbeiter hinzufügen");
@@ -220,7 +264,39 @@ public class MenuButtonController implements Initializable {
         stage.show();
     }
 
+    public void openAddSchichtWindow() {
+        Stage stage = new Stage();
+        stage.setTitle("Schicht hinzufügen");
 
+        Button saveBtn = new Button("Speichern");
+        Label label = new Label("Schichtname");
+        TextField textField = new TextField ();
+        textField.setPrefWidth(100);
+
+        // Erstellen Sie das Label, das die Bestätigungsnachricht anzeigen wird
+        Label confirmationLabel = new Label();
+
+        saveBtn.setOnAction(e -> {
+            String name = textField.getText();
+            if (!name.isEmpty()) {
+                // Sie müssen hier keinen neuen Mitarbeiter erstellen, da Sie nur den Namen speichern
+                schichtList.add(name);
+                confirmationLabel.setText("Schicht " + name + " wurde hinzugefügt");
+                textField.clear();
+            } else {
+                confirmationLabel.setText("Bitte geben Sie einen Namen der Schicht ein");
+            }
+        });
+
+        VBox layout = new VBox(10);
+        layout.setAlignment(Pos.CENTER);
+        // Fügen Sie das Bestätigungs-Label zum Layout hinzu
+        layout.getChildren().addAll(label, textField, saveBtn, confirmationLabel);
+
+        Scene scene = new Scene(layout, 300, 200);
+        stage.setScene(scene);
+        stage.show();
+    }
 
 
     @FXML

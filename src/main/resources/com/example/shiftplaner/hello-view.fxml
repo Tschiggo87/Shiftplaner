@@ -50,7 +50,7 @@
                </VBox.margin>
             </Button>
             <ImageView fitHeight="9.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-            <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="39.0" prefWidth="122.0" style="-fx-background-color: B6BE9C;" styleClass="hoverBtn" text="Schicht">
+            <Button fx:id="schichtButton" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="39.0" prefWidth="122.0" style="-fx-background-color: B6BE9C;" styleClass="hoverBtn" text="Schichten">
                <font>
                   <Font name="Arial Rounded MT Bold" size="12.0" />
                </font>
@@ -186,13 +186,13 @@
                   <GridPane fx:id="planerPanel" alignment="CENTER" hgap="5.0" prefHeight="615.0" prefWidth="903.0" vgap="10.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="112.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="87.0" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="88.0" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="91.0" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="121.0" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="113.0" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="78.0" />
                      </columnConstraints>
                      <rowConstraints>
@@ -216,11 +216,7 @@
                         <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="27.0" vgrow="NEVER" />
                      </rowConstraints>
                      <children>
-                        <Pane prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <Label layoutY="-1.0" prefHeight="31.0" prefWidth="97.0" text="Datum" />
-                           </children>
-                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" />
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
                               <Label fx:id="montagDate" alignment="CENTER" layoutX="10.0" layoutY="6.0" text="Test" />
@@ -262,7 +258,6 @@
                               <Label fx:id="sonntagDate1" layoutX="11.0" layoutY="7.0" text="Stunden" />
                            </children>
                         </Pane>
-                        <Label prefHeight="31.0" prefWidth="97.0" text="Spezielles" GridPane.rowIndex="1" />
                         <ComboBox fx:id="nameComboBox1" prefWidth="150.0" promptText="Name" GridPane.rowIndex="3" />
                         <TextField promptText="Spezielles" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <TextField promptText="Spezielles" style="-fx-border-color: none;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
@@ -294,6 +289,20 @@
                         <ComboBox fx:id="nameComboBox13" prefWidth="150.0" promptText="Name" GridPane.rowIndex="15" />
                         <ComboBox fx:id="nameComboBox14" prefWidth="150.0" promptText="Name" GridPane.rowIndex="16" />
                         <ComboBox fx:id="nameComboBox15" prefWidth="150.0" promptText="Name" GridPane.rowIndex="17" />
+                        <ComboBox fx:id="schichtComboBox1" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="schichtComboBox2" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="schichtComboBox3" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="schichtComboBox4" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="schichtComboBox5" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="schichtComboBox6" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="schichtComboBox7" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="schichtComboBox8" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="7" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="schichtComboBox9" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="schichtComboBox10" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="schichtComboBox11" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="schichtComboBox12" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="schichtComboBox13" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="schichtComboBox14" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="7" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                </children>
