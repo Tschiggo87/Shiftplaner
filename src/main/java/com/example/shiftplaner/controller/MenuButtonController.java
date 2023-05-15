@@ -129,7 +129,7 @@ public class MenuButtonController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         // Initialisierung des gridPane-Objekts
-        gridPane = new GridPane();
+        //gridPane = new GridPane();
 
         // Fügen Sie alle namenComboBox-Elemente zur Liste hinzu
         List<ComboBox<String>> comboBoxes = Arrays.asList(nameComboBox1,nameComboBox2,nameComboBox3,nameComboBox4,nameComboBox5,nameComboBox6,nameComboBox7,nameComboBox8,nameComboBox9,nameComboBox10,nameComboBox11,nameComboBox12,nameComboBox13,nameComboBox14,nameComboBox15);
@@ -172,8 +172,12 @@ public class MenuButtonController implements Initializable {
         });
 
         saveButton.setOnAction(event -> {
-            saveGridPane();
+
         });
+    }
+
+    private void bindComboBoxToSchichtList(ComboBox<String> comboBox) {
+        comboBox.itemsProperty().bind(new SimpleListProperty<>(schichtList));
     }
 
     // Diese Methode aktualisiert die Woche und die Datumsangaben in der UI
@@ -218,27 +222,35 @@ public class MenuButtonController implements Initializable {
         comboBox.itemsProperty().bind(new SimpleListProperty<>(mitarbeiterList));
     }
 
-    private void bindComboBoxToSchichtList(ComboBox<String> comboBox) {
-        comboBox.itemsProperty().bind(new SimpleListProperty<>(schichtList));
-    }
-
-    // Diese Methode wird aufgerufen, wenn der Button "Mitarbeiter hinzufügen" gedrückt wird
     public void openAddMitarbeiterWindow() {
         Stage stage = new Stage();
         stage.setTitle("Mitarbeiter hinzufügen");
 
         Button saveBtn = new Button("Speichern");
         Label label = new Label("Mitarbeitername");
-        TextField textField = new TextField ();
+        TextField textField = new TextField();
         textField.setPrefWidth(10);
 
         // Erstellen Sie das Label, das die Bestätigungsnachricht anzeigen wird
         Label confirmationLabel = new Label();
 
+        // ComboBox mit den hinzugefügten Mitarbeitern
+        Label mitarbeiterLabel = new Label("Bereits hinzugefügte Mitarbeiter");
+        ComboBox<String> comboBox = new ComboBox<>(mitarbeiterList);
+
+        // Button zum Löschen des ausgewählten Namens aus der ComboBox
+        Button deleteBtn = new Button("Löschen");
+        deleteBtn.setOnAction(event -> {
+            String selectedName = comboBox.getSelectionModel().getSelectedItem();
+            if (selectedName != null) {
+                mitarbeiterList.remove(selectedName);
+                confirmationLabel.setText("Mitarbeiter " + selectedName + " wurde gelöscht");
+            }
+        });
+
         saveBtn.setOnAction(e -> {
             String name = textField.getText();
             if (!name.isEmpty()) {
-                // Sie müssen hier keinen neuen Mitarbeiter erstellen, da Sie nur den Namen speichern
                 mitarbeiterList.add(name);
                 confirmationLabel.setText("Mitarbeiter " + name + " wurde hinzugefügt");
                 textField.clear();
@@ -249,13 +261,16 @@ public class MenuButtonController implements Initializable {
 
         VBox layout = new VBox(10);
         layout.setAlignment(Pos.CENTER);
-        // Fügen Sie das Bestätigungs-Label zum Layout hinzu
-        layout.getChildren().addAll(label, textField, saveBtn, confirmationLabel);
+        // Fügen Sie das Bestätigungs-Label, Textfeld und den Speichern-Button zum Layout hinzu
+        layout.getChildren().addAll(label, textField, saveBtn, confirmationLabel, mitarbeiterLabel, comboBox, deleteBtn);
 
-        Scene scene = new Scene(layout, 300, 200);
+        Scene scene = new Scene(layout, 300, 300);
         stage.setScene(scene);
         stage.show();
     }
+
+
+
 
     public void openAddSchichtWindow() {
         Stage stage = new Stage();
@@ -263,16 +278,29 @@ public class MenuButtonController implements Initializable {
 
         Button saveBtn = new Button("Speichern");
         Label label = new Label("Schichtname");
-        TextField textField = new TextField ();
+        TextField textField = new TextField();
         textField.setPrefWidth(100);
 
         // Erstellen Sie das Label, das die Bestätigungsnachricht anzeigen wird
         Label confirmationLabel = new Label();
 
+        // ComboBox mit den hinzugefügten Schichten
+        Label schichtLabel = new Label("Bereits hinzugefügte Schichten");
+        ComboBox<String> comboBox = new ComboBox<>(schichtList);
+
+        // Button zum Löschen des ausgewählten Namens aus der ComboBox
+        Button deleteBtn = new Button("Löschen");
+        deleteBtn.setOnAction(event -> {
+            String selectedName = comboBox.getSelectionModel().getSelectedItem();
+            if (selectedName != null) {
+                schichtList.remove(selectedName);
+                confirmationLabel.setText("Schicht " + selectedName + " wurde gelöscht");
+            }
+        });
+
         saveBtn.setOnAction(e -> {
             String name = textField.getText();
             if (!name.isEmpty()) {
-                // Sie müssen hier keinen neuen Mitarbeiter erstellen, da Sie nur den Namen speichern
                 schichtList.add(name);
                 confirmationLabel.setText("Schicht " + name + " wurde hinzugefügt");
                 textField.clear();
@@ -283,31 +311,16 @@ public class MenuButtonController implements Initializable {
 
         VBox layout = new VBox(10);
         layout.setAlignment(Pos.CENTER);
-        // Fügen Sie das Bestätigungs-Label zum Layout hinzu
-        layout.getChildren().addAll(label, textField, saveBtn, confirmationLabel);
+        // Fügen Sie das Bestätigungs-Label, Textfeld und den Speichern-Button zum Layout hinzu
+        layout.getChildren().addAll(label, textField, saveBtn, confirmationLabel, schichtLabel, comboBox, deleteBtn);
 
-        Scene scene = new Scene(layout, 300, 200);
+        Scene scene = new Scene(layout, 300, 300);
         stage.setScene(scene);
         stage.show();
     }
 
 
-    public void saveGridPane() {
-        List<List<String>> comboBoxValues = new ArrayList<>();
 
-        for (Node node : gridPane.getChildren()) {
-            if (node instanceof ComboBox) {
-                ComboBox<String> comboBox = (ComboBox<String>) node;
-                String selectedValue = comboBox.getValue();
-                List<String> rowValues = new ArrayList<>();
-                rowValues.add(selectedValue);
-                comboBoxValues.add(rowValues);
-            }
-        }
-
-        // Hier kannst du die comboBoxValues-Datenstruktur weiterverarbeiten oder speichern
-
-    }
 
 
 }
