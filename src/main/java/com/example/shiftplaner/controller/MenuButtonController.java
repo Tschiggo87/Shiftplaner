@@ -18,6 +18,7 @@ import java.time.temporal.WeekFields;
 import java.util.*;
 import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
+import java.util.function.Consumer;
 
 
 public class MenuButtonController implements Initializable {
@@ -25,7 +26,12 @@ public class MenuButtonController implements Initializable {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yy");
     private ObservableList<String> mitarbeiterList = FXCollections.observableArrayList();
     private ObservableList<String> schichtList = FXCollections.observableArrayList();
-
+    private boolean isMitarbeiterWindowOpen = false; // Instanzvariable, um den Zustand des Fensters zu speichern
+    private Stage mitarbeiterWindow; // Instanzvariable, um das Mitarbeiterfenster zu speichern
+    private boolean isSchichtWindowOpen = false; // Instanzvariable, um den Zustand des Fensters zu speichern
+    private Stage schichtWindow; // Instanzvariable, um das Schichtfenster zu speichern
+    private Stage addWindow;
+    private boolean isAddWindowOpen = false;
 
     // FXML-Elemente, auf die der Controller zugreift
     @FXML
@@ -67,24 +73,6 @@ public class MenuButtonController implements Initializable {
     @FXML
     private ComboBox<String> nameComboBox6;
     @FXML
-    private ComboBox<String> nameComboBox7;
-    @FXML
-    private ComboBox<String> nameComboBox8;
-    @FXML
-    private ComboBox<String> nameComboBox9;
-    @FXML
-    private ComboBox<String> nameComboBox10;
-    @FXML
-    private ComboBox<String> nameComboBox11;
-    @FXML
-    private ComboBox<String> nameComboBox12;
-    @FXML
-    private ComboBox<String> nameComboBox13;
-    @FXML
-    private ComboBox<String> nameComboBox14;
-    @FXML
-    private ComboBox<String> nameComboBox15;
-    @FXML
     private ComboBox<String> schichtComboBox1;
     @FXML
     private ComboBox<String> schichtComboBox2;
@@ -113,6 +101,62 @@ public class MenuButtonController implements Initializable {
     @FXML
     private ComboBox<String> schichtComboBox14;
     @FXML
+    private ComboBox<String> schichtComboBox15;
+    @FXML
+    private ComboBox<String> schichtComboBox16;
+    @FXML
+    private ComboBox<String> schichtComboBox17;
+    @FXML
+    private ComboBox<String> schichtComboBox18;
+    @FXML
+    private ComboBox<String> schichtComboBox19;
+    @FXML
+    private ComboBox<String> schichtComboBox20;
+    @FXML
+    private ComboBox<String> schichtComboBox21;
+    @FXML
+    private ComboBox<String> schichtComboBox22;
+    @FXML
+    private ComboBox<String> schichtComboBox23;
+    @FXML
+    private ComboBox<String> schichtComboBox24;
+    @FXML
+    private ComboBox<String> schichtComboBox25;
+    @FXML
+    private ComboBox<String> schichtComboBox26;
+    @FXML
+    private ComboBox<String> schichtComboBox27;
+    @FXML
+    private ComboBox<String> schichtComboBox28;
+    @FXML
+    private ComboBox<String> schichtComboBox29;
+    @FXML
+    private ComboBox<String> schichtComboBox30;
+    @FXML
+    private ComboBox<String> schichtComboBox31;
+    @FXML
+    private ComboBox<String> schichtComboBox32;
+    @FXML
+    private ComboBox<String> schichtComboBox33;
+    @FXML
+    private ComboBox<String> schichtComboBox34;
+    @FXML
+    private ComboBox<String> schichtComboBox35;
+    @FXML
+    private ComboBox<String> schichtComboBox36;
+    @FXML
+    private ComboBox<String> schichtComboBox37;
+    @FXML
+    private ComboBox<String> schichtComboBox38;
+    @FXML
+    private ComboBox<String> schichtComboBox39;
+    @FXML
+    private ComboBox<String> schichtComboBox40;
+    @FXML
+    private ComboBox<String> schichtComboBox41;
+    @FXML
+    private ComboBox<String> schichtComboBox42;
+    @FXML
     public Button mitarbeiterButton;
     @FXML
     public Button schichtButton;
@@ -132,13 +176,13 @@ public class MenuButtonController implements Initializable {
         //gridPane = new GridPane();
 
         // Fügen Sie alle namenComboBox-Elemente zur Liste hinzu
-        List<ComboBox<String>> comboBoxes = Arrays.asList(nameComboBox1,nameComboBox2,nameComboBox3,nameComboBox4,nameComboBox5,nameComboBox6,nameComboBox7,nameComboBox8,nameComboBox9,nameComboBox10,nameComboBox11,nameComboBox12,nameComboBox13,nameComboBox14,nameComboBox15);
+        List<ComboBox<String>> comboBoxes = Arrays.asList(nameComboBox1,nameComboBox2,nameComboBox3,nameComboBox4,nameComboBox5,nameComboBox6);
         for (ComboBox<String> comboBox : comboBoxes) {
             bindComboBoxToMitarbeiterList(comboBox);
         }
 
         // Füge alle schichtComboBoxen zur Liste hinzu
-        List<ComboBox<String>> schichtComboBoxe = Arrays.asList(schichtComboBox1,schichtComboBox2,schichtComboBox3,schichtComboBox4,schichtComboBox5,schichtComboBox6,schichtComboBox7,schichtComboBox8,schichtComboBox9,schichtComboBox10,schichtComboBox11,schichtComboBox12,schichtComboBox13,schichtComboBox14);
+        List<ComboBox<String>> schichtComboBoxe = Arrays.asList(schichtComboBox1,schichtComboBox2,schichtComboBox3,schichtComboBox4,schichtComboBox5,schichtComboBox6,schichtComboBox7,schichtComboBox8,schichtComboBox9,schichtComboBox10,schichtComboBox11,schichtComboBox12,schichtComboBox13,schichtComboBox14,schichtComboBox15,schichtComboBox16,schichtComboBox17,schichtComboBox18,schichtComboBox19,schichtComboBox20,schichtComboBox21,schichtComboBox22,schichtComboBox23,schichtComboBox24,schichtComboBox25,schichtComboBox26,schichtComboBox27,schichtComboBox28,schichtComboBox29,schichtComboBox30,schichtComboBox31,schichtComboBox32,schichtComboBox33,schichtComboBox34,schichtComboBox35,schichtComboBox36,schichtComboBox37,schichtComboBox38,schichtComboBox39,schichtComboBox40,schichtComboBox41,schichtComboBox42);
         for (ComboBox<String> comboBox : schichtComboBoxe) {
             bindComboBoxToSchichtList(comboBox);
         }
@@ -222,14 +266,21 @@ public class MenuButtonController implements Initializable {
         comboBox.itemsProperty().bind(new SimpleListProperty<>(mitarbeiterList));
     }
 
+
+
     public void openAddMitarbeiterWindow() {
+        if (isMitarbeiterWindowOpen) {
+            mitarbeiterWindow.toFront();
+            return; // Wenn das Fenster bereits geöffnet ist, beenden Sie die Methode
+        }
+
         Stage stage = new Stage();
         stage.setTitle("Mitarbeiter hinzufügen");
 
         Button saveBtn = new Button("Speichern");
         Label label = new Label("Mitarbeitername");
         TextField textField = new TextField();
-        textField.setPrefWidth(10);
+        textField.setMaxWidth(100);
 
         // Erstellen Sie das Label, das die Bestätigungsnachricht anzeigen wird
         Label confirmationLabel = new Label();
@@ -267,19 +318,28 @@ public class MenuButtonController implements Initializable {
         Scene scene = new Scene(layout, 300, 300);
         stage.setScene(scene);
         stage.show();
+        mitarbeiterWindow = stage;
+        isMitarbeiterWindowOpen = true;
+
+        stage.setOnCloseRequest(event -> {
+            isMitarbeiterWindowOpen = false; // Setzen Sie den Status auf 'false', wenn das Fenster geschlossen wird
+        });
     }
 
 
-
-
     public void openAddSchichtWindow() {
+        if (isSchichtWindowOpen) {
+            schichtWindow.toFront();
+            return; // Wenn das Fenster bereits geöffnet ist, beenden Sie die Methode
+        }
+
         Stage stage = new Stage();
         stage.setTitle("Schicht hinzufügen");
 
         Button saveBtn = new Button("Speichern");
         Label label = new Label("Schichtname");
         TextField textField = new TextField();
-        textField.setPrefWidth(100);
+        textField.setMaxWidth(100);
 
         // Erstellen Sie das Label, das die Bestätigungsnachricht anzeigen wird
         Label confirmationLabel = new Label();
@@ -317,9 +377,75 @@ public class MenuButtonController implements Initializable {
         Scene scene = new Scene(layout, 300, 300);
         stage.setScene(scene);
         stage.show();
+        schichtWindow = stage;
+        isSchichtWindowOpen = true;
+
+        stage.setOnCloseRequest(event -> {
+            isSchichtWindowOpen = false; // Setzen Sie den Status auf 'false', wenn das Fenster geschlossen wird
+        });
     }
 
 
+    public void openAddWindow(String title, List<String> itemList, Consumer<String> saveAction) {
+        if (isAddWindowOpen) {
+            addWindow.toFront();
+            return; // Wenn das Fenster bereits geöffnet ist, beenden Sie die Methode
+        }
+
+        Stage stage = new Stage();
+        stage.setTitle(title);
+
+        Button saveBtn = new Button("Speichern");
+        Label label = new Label(title + "name");
+        TextField textField = new TextField();
+        textField.setMaxWidth(100);
+
+        // Erstellen Sie das Label, das die Bestätigungsnachricht anzeigen wird
+        Label confirmationLabel = new Label();
+
+        // ComboBox mit den hinzugefügten Elementen
+        Label itemLabel = new Label("Bereits hinzugefügte " + title + "en");
+        ComboBox<String> comboBox = new ComboBox<>(FXCollections.observableArrayList(itemList));
+
+        // Button zum Löschen des ausgewählten Namens aus der ComboBox
+        Button deleteBtn = new Button("Löschen");
+        deleteBtn.setOnAction(event -> {
+            String selectedName = comboBox.getSelectionModel().getSelectedItem();
+            if (selectedName != null) {
+                itemList.remove(selectedName);
+                confirmationLabel.setText(title + " " + selectedName + " wurde gelöscht");
+            }
+        });
+
+        saveBtn.setOnAction(e -> {
+            String name = textField.getText();
+            if (!name.isEmpty()) {
+                itemList.add(name);
+                confirmationLabel.setText(title + " " + name + " wurde hinzugefügt");
+                textField.clear();
+                if (saveAction != null) {
+                    saveAction.accept(name); // Aufruf der übergebenen Aktion mit dem hinzugefügten Element
+                }
+            } else {
+                confirmationLabel.setText("Bitte geben Sie einen Namen ein");
+            }
+        });
+
+        VBox layout = new VBox(10);
+        layout.setAlignment(Pos.CENTER);
+        // Fügen Sie das Bestätigungs-Label, Textfeld und den Speichern-Button zum Layout hinzu
+        layout.getChildren().addAll(label, textField, saveBtn, confirmationLabel, itemLabel, comboBox, deleteBtn);
+
+        Scene scene = new Scene(layout, 300, 300);
+        stage.setScene(scene);
+        stage.show();
+        addWindow = stage;
+        isAddWindowOpen = true;
+
+        stage.setOnCloseRequest(event -> {
+            isAddWindowOpen = false; // Setzen Sie den Status auf 'false', wenn das Fenster geschlossen wird
+        });
+    }
 
 
 

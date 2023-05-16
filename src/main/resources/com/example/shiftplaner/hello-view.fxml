@@ -183,7 +183,7 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <GridPane fx:id="planerPanel" alignment="CENTER" hgap="5.0" prefHeight="615.0" prefWidth="903.0" vgap="10.0">
+                  <GridPane fx:id="planerPanel" alignment="CENTER" hgap="5.0" prefHeight="316.0" prefWidth="818.0" vgap="10.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="112.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
@@ -205,15 +205,6 @@
                         <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="26.0" vgrow="NEVER" />
                         <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="26.0" vgrow="NEVER" />
                         <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="26.0" vgrow="NEVER" />
-                        <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="26.0" vgrow="NEVER" />
-                        <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="26.0" vgrow="NEVER" />
-                        <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="26.0" vgrow="NEVER" />
-                        <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="25.0" vgrow="NEVER" />
-                        <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="27.0" vgrow="NEVER" />
-                        <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="27.0" vgrow="NEVER" />
-                        <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="27.0" vgrow="NEVER" />
-                        <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="27.0" vgrow="NEVER" />
-                        <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="27.0" vgrow="NEVER" />
                      </rowConstraints>
                      <children>
                         <Pane prefHeight="200.0" prefWidth="200.0" />
@@ -280,29 +271,48 @@
                         <ComboBox fx:id="nameComboBox5" prefWidth="150.0" promptText="Name" GridPane.rowIndex="7" />
                         <Separator prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="2" />
                         <ComboBox fx:id="nameComboBox6" prefWidth="150.0" promptText="Name" GridPane.rowIndex="8" />
-                        <ComboBox fx:id="nameComboBox7" prefWidth="150.0" promptText="Name" GridPane.rowIndex="9" />
-                        <ComboBox fx:id="nameComboBox8" prefWidth="150.0" promptText="Name" GridPane.rowIndex="10" />
-                        <ComboBox fx:id="nameComboBox9" prefWidth="150.0" promptText="Name" GridPane.rowIndex="11" />
-                        <ComboBox fx:id="nameComboBox10" prefWidth="150.0" promptText="Name" GridPane.rowIndex="12" />
-                        <ComboBox fx:id="nameComboBox11" prefWidth="150.0" promptText="Name" GridPane.rowIndex="13" />
-                        <ComboBox fx:id="nameComboBox12" prefWidth="150.0" promptText="Name" GridPane.rowIndex="14" />
-                        <ComboBox fx:id="nameComboBox13" prefWidth="150.0" promptText="Name" GridPane.rowIndex="15" />
-                        <ComboBox fx:id="nameComboBox14" prefWidth="150.0" promptText="Name" GridPane.rowIndex="16" />
-                        <ComboBox fx:id="nameComboBox15" prefWidth="150.0" promptText="Name" GridPane.rowIndex="17" />
                         <ComboBox fx:id="schichtComboBox1" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="schichtComboBox2" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-                        <ComboBox fx:id="schichtComboBox3" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-                        <ComboBox fx:id="schichtComboBox4" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                        <ComboBox fx:id="schichtComboBox5" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                        <ComboBox fx:id="schichtComboBox6" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                        <ComboBox fx:id="schichtComboBox7" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <ComboBox fx:id="schichtComboBox8" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="7" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="schichtComboBox9" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="schichtComboBox10" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="schichtComboBox11" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="schichtComboBox12" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="schichtComboBox13" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="schichtComboBox13" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="schichtComboBox12" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="schichtComboBox11" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="schichtComboBox10" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="schichtComboBox9" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="schichtComboBox8" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="schichtComboBox7" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="7" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="schichtComboBox6" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="schichtComboBox5" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="schichtComboBox4" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="schichtComboBox3" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="schichtComboBox2" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                         <ComboBox fx:id="schichtComboBox14" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="7" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="schichtComboBox15" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="schichtComboBox16" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="schichtComboBox17" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="schichtComboBox18" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="schichtComboBox19" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="schichtComboBox20" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="schichtComboBox21" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="7" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="schichtComboBox29" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <ComboBox fx:id="schichtComboBox28" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="7" GridPane.rowIndex="6" />
+                        <ComboBox fx:id="schichtComboBox27" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="6" GridPane.rowIndex="6" />
+                        <ComboBox fx:id="schichtComboBox26" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+                        <ComboBox fx:id="schichtComboBox25" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                        <ComboBox fx:id="schichtComboBox24" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                        <ComboBox fx:id="schichtComboBox23" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                        <ComboBox fx:id="schichtComboBox22" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <ComboBox fx:id="schichtComboBox42" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="7" GridPane.rowIndex="8" />
+                        <ComboBox fx:id="schichtComboBox41" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="6" GridPane.rowIndex="8" />
+                        <ComboBox fx:id="schichtComboBox40" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="5" GridPane.rowIndex="8" />
+                        <ComboBox fx:id="schichtComboBox39" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+                        <ComboBox fx:id="schichtComboBox38" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+                        <ComboBox fx:id="schichtComboBox37" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                        <ComboBox fx:id="schichtComboBox36" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <ComboBox fx:id="schichtComboBox35" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="7" GridPane.rowIndex="7" />
+                        <ComboBox fx:id="schichtComboBox34" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="6" GridPane.rowIndex="7" />
+                        <ComboBox fx:id="schichtComboBox33" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="5" GridPane.rowIndex="7" />
+                        <ComboBox fx:id="schichtComboBox32" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+                        <ComboBox fx:id="schichtComboBox31" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+                        <ComboBox fx:id="schichtComboBox30" prefWidth="150.0" promptText="Schicht" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                      </children>
                   </GridPane>
                </children>
