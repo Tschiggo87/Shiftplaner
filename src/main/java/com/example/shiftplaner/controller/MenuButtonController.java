@@ -30,8 +30,7 @@ public class MenuButtonController implements Initializable {
     private Stage mitarbeiterWindow; // Instanzvariable, um das Mitarbeiterfenster zu speichern
     private boolean isSchichtWindowOpen = false; // Instanzvariable, um den Zustand des Fensters zu speichern
     private Stage schichtWindow; // Instanzvariable, um das Schichtfenster zu speichern
-    private Stage addWindow;
-    private boolean isAddWindowOpen = false;
+
 
     // FXML-Elemente, auf die der Controller zugreift
     @FXML
@@ -166,14 +165,9 @@ public class MenuButtonController implements Initializable {
     private GridPane gridPane;
 
 
-
-
     // Diese Methode wird aufgerufen, wenn der Controller initialisiert wird
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        // Initialisierung des gridPane-Objekts
-        //gridPane = new GridPane();
 
         // Fügen Sie alle namenComboBox-Elemente zur Liste hinzu
         List<ComboBox<String>> comboBoxes = Arrays.asList(nameComboBox1,nameComboBox2,nameComboBox3,nameComboBox4,nameComboBox5,nameComboBox6);
@@ -186,7 +180,6 @@ public class MenuButtonController implements Initializable {
         for (ComboBox<String> comboBox : schichtComboBoxe) {
             bindComboBoxToSchichtList(comboBox);
         }
-
 
         currentDate = LocalDate.now(); // Setze das aktuelle Datum
         updateWeekNumber(); // Aktualisiere die Woche und die Datumsangaben in der UI
@@ -265,8 +258,6 @@ public class MenuButtonController implements Initializable {
     private void bindComboBoxToMitarbeiterList(ComboBox<String> comboBox) {
         comboBox.itemsProperty().bind(new SimpleListProperty<>(mitarbeiterList));
     }
-
-
 
     public void openAddMitarbeiterWindow() {
         if (isMitarbeiterWindowOpen) {
@@ -384,70 +375,5 @@ public class MenuButtonController implements Initializable {
             isSchichtWindowOpen = false; // Setzen Sie den Status auf 'false', wenn das Fenster geschlossen wird
         });
     }
-
-
-    public void openAddWindow(String title, List<String> itemList, Consumer<String> saveAction) {
-        if (isAddWindowOpen) {
-            addWindow.toFront();
-            return; // Wenn das Fenster bereits geöffnet ist, beenden Sie die Methode
-        }
-
-        Stage stage = new Stage();
-        stage.setTitle(title);
-
-        Button saveBtn = new Button("Speichern");
-        Label label = new Label(title + "name");
-        TextField textField = new TextField();
-        textField.setMaxWidth(100);
-
-        // Erstellen Sie das Label, das die Bestätigungsnachricht anzeigen wird
-        Label confirmationLabel = new Label();
-
-        // ComboBox mit den hinzugefügten Elementen
-        Label itemLabel = new Label("Bereits hinzugefügte " + title + "en");
-        ComboBox<String> comboBox = new ComboBox<>(FXCollections.observableArrayList(itemList));
-
-        // Button zum Löschen des ausgewählten Namens aus der ComboBox
-        Button deleteBtn = new Button("Löschen");
-        deleteBtn.setOnAction(event -> {
-            String selectedName = comboBox.getSelectionModel().getSelectedItem();
-            if (selectedName != null) {
-                itemList.remove(selectedName);
-                confirmationLabel.setText(title + " " + selectedName + " wurde gelöscht");
-            }
-        });
-
-        saveBtn.setOnAction(e -> {
-            String name = textField.getText();
-            if (!name.isEmpty()) {
-                itemList.add(name);
-                confirmationLabel.setText(title + " " + name + " wurde hinzugefügt");
-                textField.clear();
-                if (saveAction != null) {
-                    saveAction.accept(name); // Aufruf der übergebenen Aktion mit dem hinzugefügten Element
-                }
-            } else {
-                confirmationLabel.setText("Bitte geben Sie einen Namen ein");
-            }
-        });
-
-        VBox layout = new VBox(10);
-        layout.setAlignment(Pos.CENTER);
-        // Fügen Sie das Bestätigungs-Label, Textfeld und den Speichern-Button zum Layout hinzu
-        layout.getChildren().addAll(label, textField, saveBtn, confirmationLabel, itemLabel, comboBox, deleteBtn);
-
-        Scene scene = new Scene(layout, 300, 300);
-        stage.setScene(scene);
-        stage.show();
-        addWindow = stage;
-        isAddWindowOpen = true;
-
-        stage.setOnCloseRequest(event -> {
-            isAddWindowOpen = false; // Setzen Sie den Status auf 'false', wenn das Fenster geschlossen wird
-        });
-    }
-
-
-
 }
 
