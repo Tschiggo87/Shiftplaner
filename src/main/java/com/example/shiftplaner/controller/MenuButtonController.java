@@ -1,5 +1,6 @@
+//Package name
 package com.example.shiftplaner.controller;
-
+//Importierte Klassen
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,16 +23,22 @@ import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
 import java.util.function.Consumer;
 
-
+//Klasse MenuButtonController, dient zur Steuerung der Menü-Buttons
 public class MenuButtonController implements Initializable {
     // Definiere einen DateTimeFormatter für das Format "dd.MM.yyyy"
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yy");
+    // Definite Mitarbeiter-Liste
     private ObservableList<String> mitarbeiterList = FXCollections.observableArrayList();
+    //Definiert die Schicht-Liste
     private ObservableList<String> schichtList = FXCollections.observableArrayList();
-    private boolean isMitarbeiterWindowOpen = false; // Instanzvariable, um den Zustand des Fensters zu speichern
-    private Stage mitarbeiterWindow; // Instanzvariable, um das Mitarbeiterfenster zu speichern
-    private boolean isSchichtWindowOpen = false; // Instanzvariable, um den Zustand des Fensters zu speichern
-    private Stage schichtWindow; // Instanzvariable, um das Schichtfenster zu speichern
+    // Instanzvariable, um den Zustand des Fensters zu speichern
+    private boolean isMitarbeiterWindowOpen = false;
+    // Instanzvariable, um das Mitarbeiterfenster zu speichern
+    private Stage mitarbeiterWindow;
+    // Instanzvariable, um den Zustand des Fensters zu speichern
+    private boolean isSchichtWindowOpen = false;
+    // Instanzvariable, um das Schichtfenster zu speichern
+    private Stage schichtWindow;
 
 
 
@@ -39,7 +46,6 @@ public class MenuButtonController implements Initializable {
     // FXML-Elemente, auf die der Controller zugreift
     @FXML
     private Button naechsteWocheButton;
-
     @FXML
     private Button vorherigeWocheButton;
     @FXML
@@ -172,10 +178,10 @@ public class MenuButtonController implements Initializable {
     // Diese Methode wird aufgerufen, wenn der Controller initialisiert wird
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        // Verbindung zur Datenbank herstellen methode wird aufgerufen
         try {
-            // Verbindung zur Datenbank herstellen
             DatenbankManager dbManager = new DatenbankManager();
+            // Verbindung zur Datenbank herstellen
             dbManager.connect();
 
             // Daten aus der Datenbank laden
@@ -183,135 +189,218 @@ public class MenuButtonController implements Initializable {
 
             // Verbindung zur Datenbank trennen
             dbManager.disconnect();
+            //Fehler abfangen
         } catch (SQLException ex) {
+            // Fehlermeldung ausgeben
             ex.printStackTrace();
-            // Handle the exception properly
         }
 
 
 
         // Fügen Sie alle namenComboBox-Elemente zur Liste hinzu
-        List<ComboBox<String>> comboBoxes = Arrays.asList(nameComboBox1, nameComboBox2, nameComboBox3, nameComboBox4, nameComboBox5, nameComboBox6);
+        List<ComboBox<String>> comboBoxes = Arrays.asList(
+                nameComboBox1, nameComboBox2, nameComboBox3,
+                nameComboBox4, nameComboBox5, nameComboBox6);
+        // Füge alle namenComboBoxen zur Liste hinzu
         for (ComboBox<String> comboBox : comboBoxes) {
+            // Füge alle Mitarbeiter zur ComboBox hinzu
             bindComboBoxToMitarbeiterList(comboBox);
         }
 
         // Füge alle schichtComboBoxen zur Liste hinzu
-        List<ComboBox<String>> schichtComboBoxe = Arrays.asList(schichtComboBox1, schichtComboBox2, schichtComboBox3, schichtComboBox4, schichtComboBox5, schichtComboBox6, schichtComboBox7, schichtComboBox8, schichtComboBox9, schichtComboBox10, schichtComboBox11, schichtComboBox12, schichtComboBox13, schichtComboBox14, schichtComboBox15, schichtComboBox16, schichtComboBox17, schichtComboBox18, schichtComboBox19, schichtComboBox20, schichtComboBox21, schichtComboBox22, schichtComboBox23, schichtComboBox24, schichtComboBox25, schichtComboBox26, schichtComboBox27, schichtComboBox28, schichtComboBox29, schichtComboBox30, schichtComboBox31, schichtComboBox32, schichtComboBox33, schichtComboBox34, schichtComboBox35, schichtComboBox36, schichtComboBox37, schichtComboBox38, schichtComboBox39, schichtComboBox40, schichtComboBox41, schichtComboBox42);
+        List<ComboBox<String>> schichtComboBoxe = Arrays.asList(
+                schichtComboBox1, schichtComboBox2, schichtComboBox3,
+                schichtComboBox4, schichtComboBox5, schichtComboBox6,
+                schichtComboBox7, schichtComboBox8, schichtComboBox9,
+                schichtComboBox10, schichtComboBox11, schichtComboBox12,
+                schichtComboBox13, schichtComboBox14, schichtComboBox15,
+                schichtComboBox16, schichtComboBox17, schichtComboBox18,
+                schichtComboBox19, schichtComboBox20, schichtComboBox21,
+                schichtComboBox22, schichtComboBox23, schichtComboBox24,
+                schichtComboBox25, schichtComboBox26, schichtComboBox27,
+                schichtComboBox28, schichtComboBox29, schichtComboBox30,
+                schichtComboBox31, schichtComboBox32, schichtComboBox33,
+                schichtComboBox34, schichtComboBox35, schichtComboBox36,
+                schichtComboBox37, schichtComboBox38, schichtComboBox39,
+                schichtComboBox40, schichtComboBox41, schichtComboBox42);
+        // Füge alle schichtComboBoxen zur Liste hinzu
         for (ComboBox<String> comboBox : schichtComboBoxe) {
+            // Füge alle Schichten zur ComboBox hinzu
             bindComboBoxToSchichtList(comboBox);
         }
-
-        currentDate = LocalDate.now(); // Setze das aktuelle Datum
-        updateWeekNumber(); // Aktualisiere die Woche und die Datumsangaben in der UI
+        // Setze das aktuelle Datum
+        currentDate = LocalDate.now();
+        // Aktualisiere die Woche und die Datumsangaben in der UI
+        updateWeekNumber();
+        // Aktualisiere die Woche und die Datumsangaben in der UI
         weekRange();
 
         // Definiere die Aktionen für die Buttons, um zur nächsten bzw. vorherigen Woche zu navigieren
         naechsteWocheButton.setOnAction(event -> {
-            currentDate = currentDate.plusWeeks(1); // Addiere eine Woche zum aktuellen Datum
-            updateDates(); // Aktualisiere die Datumsangaben in der UI
-            updateWeekNumber(); // Aktualisiere die Woche in der UI
-            weekRange(); // Aktualisiere die Angabe für den Wochenbeginn und das Wochenende in der UI
+            // Addiere eine Woche zum aktuellen Datum
+            currentDate = currentDate.plusWeeks(1);
+            // Aktualisiere die Datumsangaben in der UI
+            updateDates();
+            // Aktualisiere die Woche in der UI
+            updateWeekNumber();
+            // Aktualisiere die Angabe für den Wochenbeginn und das Wochenende in der UI
+            weekRange();
         });
 
+        // Definiere die Aktionen für die Buttons, um zur nächsten bzw. vorherigen Woche zu navigieren
         vorherigeWocheButton.setOnAction(event -> {
-            currentDate = currentDate.minusWeeks(1); // Subtrahiere eine Woche vom aktuellen Datum
-            updateDates(); // Aktualisiere die Datumsangaben in der UI
-            updateWeekNumber(); // Aktualisiere die Woche in der UI
-            weekRange(); // Aktualisiere die Angabe für den Wochenbeginn und das Wochenende in der UI
+            // Subtrahiere eine Woche vom aktuellen Datum
+            currentDate = currentDate.minusWeeks(1);
+            // Aktualisiere die Datumsangaben in der UI
+            updateDates();
+            // Aktualisiere die Woche in der UI
+            updateWeekNumber();
+            // Aktualisiere die Angabe für den Wochenbeginn und das Wochenende in der UI
+            weekRange();
         });
 
+        // Definiere die Aktionen für die Buttons, um zur nächsten bzw. vorherigen Woche zu navigieren
         mitarbeiterButton.setOnAction(event -> {
+            // Öffne das Fenster zum Hinzufügen eines Mitarbeiters
             openAddMitarbeiterWindow();
         });
 
+        // Definiere die Aktionen für die Buttons, um zur nächsten bzw. vorherigen Woche zu navigieren
         schichtButton.setOnAction(event -> {
+            // Öffne das Fenster zum Hinzufügen einer Schicht
             openAddSchichtWindow();
         });
 
+        // Definiere die Aktionen für die Buttons, um zur nächsten bzw. vorherigen Woche zu navigieren
         saveButton.setOnAction(event -> {
+            // Speichere die Daten in der Datenbank
 
         });
     }
 
+    // Diese Methode öffnet das Fenster zum Hinzufügen eines Mitarbeiters
     private void bindComboBoxToSchichtList(ComboBox<String> comboBox) {
+        // Erstelle eine Liste mit allen Schichten
         comboBox.itemsProperty().bind(new SimpleListProperty<>(schichtList));
     }
 
     // Diese Methode aktualisiert die Woche und die Datumsangaben in der UI
     private void updateWeekNumber() {
-        int weekNumber = currentDate.get(WeekFields.ISO.weekOfWeekBasedYear()); // Ermittle die aktuelle Woche
-        wochenNr.setText("Woche: " + weekNumber); // Setze die Woche in der UI
+        // Ermittle die aktuelle Woche
+        int weekNumber = currentDate.get(WeekFields.ISO.weekOfWeekBasedYear());
+        // Setze die Woche in der UI
+        wochenNr.setText("Woche: " + weekNumber);
 
         // Erstelle Arrays für die Labels der einzelnen Wochentage und die entsprechenden DayOfWeek-Konstanten
-        Label[] dateLabels = {montagDate, dienstagDate, mittwochDate, donnerstagDate, freitagDate, samstagDate, sonntagDate};
-        DayOfWeek[] dayOfWeeks = {DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY};
+        Label[] dateLabels = {
+                //WochenTage in der UI
+                montagDate, dienstagDate, mittwochDate,
+                donnerstagDate, freitagDate, samstagDate, sonntagDate};
+        // Erstelle ein Array mit den DayOfWeek-Konstanten
+        DayOfWeek[] dayOfWeeks = {DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY,
+                DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY};
         // Iteriere über die Labels der einzelnen Wochentage und setze das entsprechende Datum in der UI
         for (int i = 0; i < dateLabels.length; i++) {
-            LocalDate dayDate = currentDate.with(dayOfWeeks[i]); // Ermittle das Datum des entsprechenden Wochentags
-            String formattedDate = DATE_FORMATTER.format(dayDate); // Formatiere das Datum
-            dateLabels[i].setText(formattedDate); // Setze das Datum in der UI
+            // Ermittle das Datum des entsprechenden Wochentags
+            LocalDate dayDate = currentDate.with(dayOfWeeks[i]);
+            // Formatiere das Datum
+            String formattedDate = DATE_FORMATTER.format(dayDate);
+            // Setze das Datum in der UI
+            dateLabels[i].setText(formattedDate);
         }
     }
 
     // Diese Methode aktualisiert die Angabe für den Wochenbeginn und das Wochenende in der UI
     private void weekRange() {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy"); // Definiere einen DateTimeFormatter für das Format "dd.MM.yyyy"
-        LocalDate weekBegin = currentDate.with(DayOfWeek.MONDAY); // Ermittle das Datum des Wochenbeginns
-        wocheVon.setText(dateFormatter.format(weekBegin)); // Setze das Datum des Wochenbeginns in der UI
+        // Definiere einen DateTimeFormatter für das Format "dd.MM.yyyy"
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        // Ermittle das Datum des Wochenbeginns
+        LocalDate weekBegin = currentDate.with(DayOfWeek.MONDAY);
+        // Setze das Datum des Wochenbeginns in der UI
+        wocheVon.setText(dateFormatter.format(weekBegin));
 
-        LocalDate weekEnd = currentDate.with(DayOfWeek.SUNDAY); // Ermittle das Datum des Wochenendes
-        wocheBis.setText(dateFormatter.format(weekEnd)); // Setze das Datum des Wochenendes in der UI
+        // Ermittle das Datum des Wochenendes
+        LocalDate weekEnd = currentDate.with(DayOfWeek.SUNDAY);
+        // Setze das Datum des Wochenendes in der UI
+        wocheBis.setText(dateFormatter.format(weekEnd));
     }
 
     // Diese Methode aktualisiert die Datumsangaben in der UI
     private void updateDates() {
-        LocalDate monday = currentDate.with(DayOfWeek.MONDAY); // Ermittle das Datum des Montags
-        montagDate.setText(monday.toString()); // Setze das Datum des Montags in der UI
-        dienstagDate.setText(monday.plusDays(1).toString()); // Setze das Datum des Dienstags in der UI
-        mittwochDate.setText(monday.plusDays(2).toString()); // Setze das Datum des Mittwochs in der UI
-        donnerstagDate.setText(monday.plusDays(3).toString()); // Setze das Datum des Donnerstags in der UI
-        freitagDate.setText(monday.plusDays(4).toString()); // Setze das Datum des Freitags in der UI
-        samstagDate.setText(monday.plusDays(5).toString()); // Setze das Datum des Samstags in der UI
-        sonntagDate.setText(monday.plusDays(6).toString()); // Setze das Datum des Sonntags in der UI
+        // Ermittle das Datum des Montags
+        LocalDate monday = currentDate.with(DayOfWeek.MONDAY);
+        // Setze das Datum des Montags in der UI
+        montagDate.setText(monday.toString());
+        // Setze das Datum des Dienstags in der UI
+        dienstagDate.setText(monday.plusDays(1).toString());
+        // Setze das Datum des Mittwochs in der UI
+        mittwochDate.setText(monday.plusDays(2).toString());
+        // Setze das Datum des Donnerstags in der UI
+        donnerstagDate.setText(monday.plusDays(3).toString());
+        // Setze das Datum des Freitags in der UI
+        freitagDate.setText(monday.plusDays(4).toString());
+        // Setze das Datum des Samstags in der UI
+        samstagDate.setText(monday.plusDays(5).toString());
+        // Setze das Datum des Sonntags in der UI
+        sonntagDate.setText(monday.plusDays(6).toString());
     }
 
+    // Diese Methode öffnet das Fenster zum Hinzufügen eines Mitarbeiters
     private void bindComboBoxToMitarbeiterList(ComboBox<String> comboBox) {
+        // Erstelle eine Liste mit allen Mitarbeitern
         comboBox.itemsProperty().bind(new SimpleListProperty<>(mitarbeiterList));
     }
 
+    // Diese Methode öffnet das Fenster zum Hinzufügen eines Mitarbeiters
     public void openAddMitarbeiterWindow() {
+        // Überprüfen Sie, ob das Fenster bereits geöffnet ist
         if (isMitarbeiterWindowOpen) {
+            // Wenn das Fenster bereits geöffnet ist, bringen Sie es nach vorne
             mitarbeiterWindow.toFront();
-            return; // Wenn das Fenster bereits geöffnet ist, beenden Sie die Methode
+            // Beenden Sie die Methode
+            return;
         }
 
+        // Erstellt ein neues Fenster
         Stage stage = new Stage();
+        // Setze die Eigenschaften des Fensters
         stage.setTitle("Mitarbeiter hinzufügen");
 
+        // Erstelle ein GridPane
         Button saveBtn = new Button("Speichern");
+        // Definiere die Aktionen für den Speichern-Button
         Label label = new Label("Mitarbeitername");
+        // Erstellen Sie das Textfeld, in dem der Name des Mitarbeiters eingegeben wird
         TextField textField = new TextField();
+        // Begrenzen Sie die maximale Breite des Textfelds
         textField.setMaxWidth(100);
 
         // Erstellen Sie das Label, das die Bestätigungsnachricht anzeigen wird
         Label confirmationLabel = new Label();
 
-        // ComboBox mit den hinzugefügten Mitarbeitern
+        // Erdstellt ein GridPane
         Label mitarbeiterLabel = new Label("Bereits hinzugefügte Mitarbeiter");
+        // ComboBox mit den hinzugefügten Mitarbeitern
         ComboBox<String> comboBox = new ComboBox<>(mitarbeiterList);
 
         // Button zum Löschen des ausgewählten Namens aus der ComboBox
         Button deleteBtn = new Button("Löschen");
+        // Definiere die Aktionen für den Löschen-Button
         deleteBtn.setOnAction(event -> {
+            //Hier wird der ausgewählte Name aus der ComboBox gelöscht
             String selectedName = comboBox.getSelectionModel().getSelectedItem();
+            // Überprüfen Sie, ob ein Name ausgewählt wurde
             if (selectedName != null) {
+                // Löschen Sie den ausgewählten Namen aus der Liste
                 mitarbeiterList.remove(selectedName);
+                // Setzen Sie die Bestätigungsnachricht
                 confirmationLabel.setText("Mitarbeiter " + selectedName + " wurde gelöscht");
 
+                // Löschen Sie den ausgewählten Namen aus der Datenbank
                 try {
                     // Verbindung zur Datenbank herstellen
                     DatenbankManager dbManager = new DatenbankManager();
+                    // Verbindung zur Datenbank herstellen
                     dbManager.connect();
 
                     // Mitarbeiter aus der Datenbank löschen
@@ -319,22 +408,32 @@ public class MenuButtonController implements Initializable {
 
                     // Verbindung zur Datenbank trennen
                     dbManager.disconnect();
+                    // Fehlerbehandlung
                 } catch (SQLException ex) {
+                    // Fehlerbehandlung
                     ex.printStackTrace();
-                    // Handle the exception properly
                 }
             }
         });
 
+        // Button zum Hinzufügen eines Mitarbeiters
         saveBtn.setOnAction(e -> {
+            // Hier wird der Name des Mitarbeiters aus dem Textfeld gelesen
             String name = textField.getText();
+            // Überprüfen Sie, ob ein Name eingegeben wurde
             if (!name.isEmpty()) {
+                // Fügen Sie den Namen der Liste hinzu
                 mitarbeiterList.add(name);
+                // Setzen Sie die Bestätigungsnachricht
                 confirmationLabel.setText("Mitarbeiter " + name + " wurde hinzugefügt");
+                // Löschen Sie den Text aus dem Textfeld
                 textField.clear();
+
+                // Speichern Sie den Namen in der Datenbank
                 try {
                     // Verbindung zur Datenbank herstellen
                     DatenbankManager dbManager = new DatenbankManager();
+                    // Verbindung zur Datenbank herstellen
                     dbManager.connect();
 
                     // Mitarbeiter in die Datenbank speichern
@@ -343,45 +442,63 @@ public class MenuButtonController implements Initializable {
                     // Verbindung zur Datenbank trennen
                     dbManager.disconnect();
 
+                    // Fehlerbehandlung
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                     // Handle the exception properly
                 }
             } else {
+                // Setzen Sie die Bestätigungsnachricht
                 confirmationLabel.setText("Bitte geben Sie einen Namen ein");
             }
         });
 
+        // Erstellen Sie ein VBox-Layout
         VBox layout = new VBox(10);
+        // Zentrieren Sie das Layout
         layout.setAlignment(Pos.CENTER);
         // Fügen Sie das Bestätigungs-Label, Textfeld und den Speichern-Button zum Layout hinzu
-        layout.getChildren().addAll(label, textField, saveBtn, confirmationLabel, mitarbeiterLabel, comboBox, deleteBtn);
+        layout.getChildren().addAll(label, textField, saveBtn, confirmationLabel,
+                                    mitarbeiterLabel, comboBox, deleteBtn);
 
+        // Erstellen Sie eine Szene
         Scene scene = new Scene(layout, 300, 300);
+        // Setze die Szene
         stage.setScene(scene);
+        // Zeige das Fenster
         stage.show();
+        // Setze das Fenster auf 'true', wenn es geöffnet ist
         mitarbeiterWindow = stage;
+        // Setze das Fenster auf 'true', wenn es geöffnet ist
         isMitarbeiterWindowOpen = true;
 
+        // Setze die Aktionen, die ausgeführt werden, wenn das Fenster geschlossen wird
         stage.setOnCloseRequest(event -> {
             isMitarbeiterWindowOpen = false; // Setzen Sie den Status auf 'false', wenn das Fenster geschlossen wird
         });
     }
 
-
-
+    // Diese Methode öffnet das Fenster zum Hinzufügen einer Schicht
     public void openAddSchichtWindow() {
+        // Überprüfen Sie, ob das Fenster bereits geöffnet ist
         if (isSchichtWindowOpen) {
+            // Wenn das Fenster bereits geöffnet ist, bringen Sie es nach vorne
             schichtWindow.toFront();
             return; // If the window is already open, terminate the method
         }
 
+        // Erstellt ein neues Fenster
         Stage stage = new Stage();
+        // Setze die Eigenschaften des Fensters
         stage.setTitle("Schicht hinzufügen");
 
+        // Erstelle ein GridPane
         Button saveBtn = new Button("Speichern");
+        // Definiere die Aktionen für den Speichern-Button
         Label label = new Label("Schichtname");
+        // Erstellen Sie das Textfeld, in dem der Name des Mitarbeiters eingegeben wird
         TextField textField = new TextField();
+        // Begrenzen Sie die maximale Breite des Textfelds
         textField.setMaxWidth(100);
 
         // Create the label that will display the confirmation message
@@ -389,69 +506,93 @@ public class MenuButtonController implements Initializable {
 
         // ComboBox with the added shifts
         Label schichtLabel = new Label("Bereits hinzugefügte Schichten");
+        // ComboBox mit den hinzugefügten Schichten
         ComboBox<String> comboBox = new ComboBox<>(schichtList);
 
-        // Button for deleting the selected name from the ComboBox
+        //Buttom zum Löschen des ausgewählten Namens aus der ComboBox
         Button deleteBtn = new Button("Löschen");
+        // Definiere die Aktionen für den Löschen-Button
         deleteBtn.setOnAction(event -> {
+            //Hier wird der ausgewählte Name aus der ComboBox gelöscht
             String selectedName = comboBox.getSelectionModel().getSelectedItem();
+            // Prüft, ob ein Name ausgewählt wurde
             if (selectedName != null) {
+                // Löscht den ausgewählten Namen aus der Liste
                 schichtList.remove(selectedName);
+                // Setzt die Bestätigungsnachricht
                 confirmationLabel.setText("Schicht " + selectedName + " wurde gelöscht");
             }
         });
 
+        // Button zum Hinzufügen einer Schicht
         saveBtn.setOnAction(e -> {
+            // Hier wird der Name der Schicht aus dem Textfeld gelesen
             String name = textField.getText();
+            // Überprüfen Sie, ob ein Name eingegeben wurde
             if (!name.isEmpty()) {
+                // Fügen Sie den Namen der Liste hinzu
                 schichtList.add(name);
+                // Setzen Sie die Bestätigungsnachricht
                 confirmationLabel.setText("Schicht " + name + " wurde hinzugefügt");
+                // Löschen Sie den Text aus dem Textfeld
                 textField.clear();
 
+                // Speichern Sie den Namen in der Datenbank
                 try {
-                    // Verbindung zur Datenbank herstellen
+                    // Verbindung zur Datenbank herstellen durch den DatenbankManager
                     DatenbankManager dbManager  = new DatenbankManager();
+                    // Verbindung zur Datenbank herstellen
                     dbManager.connect();
 
                     // Speichern der schichtList in die Datenbank
                     // Konvertiere ObservableList zu ArrayList vor dem Speichern
                     List<String> schichtListAsRegularList = new ArrayList<>(schichtList);
-                    dbManager.saveComboBoxItems("Schicht", "schichtName", schichtListAsRegularList);
+                    // Speichern der schichtList in die Datenbank
+                    dbManager.saveComboBoxItems("Schicht", "schichtName",
+                                                schichtListAsRegularList);
 
                     // Verbindung zur Datenbank trennen
                     dbManager.disconnect();
 
+                    // Fehlersbfang
                 } catch (SQLException ex) {
+                    // Fehlerbehandlung
                     ex.printStackTrace();
-                    // Handle the exception properly
                 }
+                // Überprüfen Sie, ob ein Name eingegeben wurde
             } else {
+                // Setzen Sie die Bestätigungsnachricht
                 confirmationLabel.setText("Bitte geben Sie einen Namen ein");
             }
         });
 
+        // Erstellen Sie ein VBox-Layout
         VBox layout = new VBox(10);
+        // Zentrieren Sie das Layout
         layout.setAlignment(Pos.CENTER);
         // Add the confirmation label, text field and save button to the layout
         layout.getChildren().addAll(label, textField, saveBtn, confirmationLabel, schichtLabel, comboBox, deleteBtn);
 
+        // Erstellen Sie eine Szene
         Scene scene = new Scene(layout, 300, 300);
+        // Setze die Szene
         stage.setScene(scene);
+        // Zeige das Fenster
         stage.show();
+        // Setze das Fenster auf 'true', wenn es geöffnet ist
         schichtWindow = stage;
         isSchichtWindowOpen = true;
-
         stage.setOnCloseRequest(event -> {
-            isSchichtWindowOpen = false; // Set the status to 'false' when the window is closed
+        //Setzt den Status auf 'false', wenn das Fenster geschlossen ist
+            isSchichtWindowOpen = false;
         });
     }
-
+    //Methoden zum Laden der Daten aus der Datenbank
     private void loadComboBoxItemsFromDatabase(DatenbankManager dbManager) throws SQLException {
         // Daten aus der Datenbank in die ObservableLists laden
         mitarbeiterList.setAll(dbManager.loadComboBoxItems("Mitarbeiter", "mitarbeiterName"));
+        // Konvertiere ArrayList zu ObservableList
         schichtList.setAll(dbManager.loadComboBoxItems("Schicht", "schichtName"));
     }
-
-
 
 }
