@@ -13,6 +13,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 import java.util.*;
@@ -30,6 +32,8 @@ public class MenuButtonController implements Initializable {
     private Stage mitarbeiterWindow; // Instanzvariable, um das Mitarbeiterfenster zu speichern
     private boolean isSchichtWindowOpen = false; // Instanzvariable, um den Zustand des Fensters zu speichern
     private Stage schichtWindow; // Instanzvariable, um das Schichtfenster zu speichern
+
+
 
 
     // FXML-Elemente, auf die der Controller zugreift
@@ -169,14 +173,31 @@ public class MenuButtonController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        try {
+            // Verbindung zur Datenbank herstellen
+            DatenbankManager dbManager = new DatenbankManager();
+            dbManager.connect();
+
+            // Daten aus der Datenbank laden
+            loadComboBoxItemsFromDatabase(dbManager);
+
+            // Verbindung zur Datenbank trennen
+            dbManager.disconnect();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // Handle the exception properly
+        }
+
+
+
         // Fügen Sie alle namenComboBox-Elemente zur Liste hinzu
-        List<ComboBox<String>> comboBoxes = Arrays.asList(nameComboBox1,nameComboBox2,nameComboBox3,nameComboBox4,nameComboBox5,nameComboBox6);
+        List<ComboBox<String>> comboBoxes = Arrays.asList(nameComboBox1, nameComboBox2, nameComboBox3, nameComboBox4, nameComboBox5, nameComboBox6);
         for (ComboBox<String> comboBox : comboBoxes) {
             bindComboBoxToMitarbeiterList(comboBox);
         }
 
         // Füge alle schichtComboBoxen zur Liste hinzu
-        List<ComboBox<String>> schichtComboBoxe = Arrays.asList(schichtComboBox1,schichtComboBox2,schichtComboBox3,schichtComboBox4,schichtComboBox5,schichtComboBox6,schichtComboBox7,schichtComboBox8,schichtComboBox9,schichtComboBox10,schichtComboBox11,schichtComboBox12,schichtComboBox13,schichtComboBox14,schichtComboBox15,schichtComboBox16,schichtComboBox17,schichtComboBox18,schichtComboBox19,schichtComboBox20,schichtComboBox21,schichtComboBox22,schichtComboBox23,schichtComboBox24,schichtComboBox25,schichtComboBox26,schichtComboBox27,schichtComboBox28,schichtComboBox29,schichtComboBox30,schichtComboBox31,schichtComboBox32,schichtComboBox33,schichtComboBox34,schichtComboBox35,schichtComboBox36,schichtComboBox37,schichtComboBox38,schichtComboBox39,schichtComboBox40,schichtComboBox41,schichtComboBox42);
+        List<ComboBox<String>> schichtComboBoxe = Arrays.asList(schichtComboBox1, schichtComboBox2, schichtComboBox3, schichtComboBox4, schichtComboBox5, schichtComboBox6, schichtComboBox7, schichtComboBox8, schichtComboBox9, schichtComboBox10, schichtComboBox11, schichtComboBox12, schichtComboBox13, schichtComboBox14, schichtComboBox15, schichtComboBox16, schichtComboBox17, schichtComboBox18, schichtComboBox19, schichtComboBox20, schichtComboBox21, schichtComboBox22, schichtComboBox23, schichtComboBox24, schichtComboBox25, schichtComboBox26, schichtComboBox27, schichtComboBox28, schichtComboBox29, schichtComboBox30, schichtComboBox31, schichtComboBox32, schichtComboBox33, schichtComboBox34, schichtComboBox35, schichtComboBox36, schichtComboBox37, schichtComboBox38, schichtComboBox39, schichtComboBox40, schichtComboBox41, schichtComboBox42);
         for (ComboBox<String> comboBox : schichtComboBoxe) {
             bindComboBoxToSchichtList(comboBox);
         }
@@ -287,6 +308,21 @@ public class MenuButtonController implements Initializable {
             if (selectedName != null) {
                 mitarbeiterList.remove(selectedName);
                 confirmationLabel.setText("Mitarbeiter " + selectedName + " wurde gelöscht");
+
+                try {
+                    // Verbindung zur Datenbank herstellen
+                    DatenbankManager dbManager = new DatenbankManager();
+                    dbManager.connect();
+
+                    // Mitarbeiter aus der Datenbank löschen
+                    dbManager.deleteMitarbeiter(selectedName);
+
+                    // Verbindung zur Datenbank trennen
+                    dbManager.disconnect();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    // Handle the exception properly
+                }
             }
         });
 
@@ -296,6 +332,21 @@ public class MenuButtonController implements Initializable {
                 mitarbeiterList.add(name);
                 confirmationLabel.setText("Mitarbeiter " + name + " wurde hinzugefügt");
                 textField.clear();
+                try {
+                    // Verbindung zur Datenbank herstellen
+                    DatenbankManager dbManager = new DatenbankManager();
+                    dbManager.connect();
+
+                    // Mitarbeiter in die Datenbank speichern
+                    dbManager.saveComboBoxItems("Mitarbeiter", "mitarbeiterName", mitarbeiterList);
+
+                    // Verbindung zur Datenbank trennen
+                    dbManager.disconnect();
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    // Handle the exception properly
+                }
             } else {
                 confirmationLabel.setText("Bitte geben Sie einen Namen ein");
             }
@@ -318,10 +369,11 @@ public class MenuButtonController implements Initializable {
     }
 
 
+
     public void openAddSchichtWindow() {
         if (isSchichtWindowOpen) {
             schichtWindow.toFront();
-            return; // Wenn das Fenster bereits geöffnet ist, beenden Sie die Methode
+            return; // If the window is already open, terminate the method
         }
 
         Stage stage = new Stage();
@@ -332,14 +384,14 @@ public class MenuButtonController implements Initializable {
         TextField textField = new TextField();
         textField.setMaxWidth(100);
 
-        // Erstellen Sie das Label, das die Bestätigungsnachricht anzeigen wird
+        // Create the label that will display the confirmation message
         Label confirmationLabel = new Label();
 
-        // ComboBox mit den hinzugefügten Schichten
+        // ComboBox with the added shifts
         Label schichtLabel = new Label("Bereits hinzugefügte Schichten");
         ComboBox<String> comboBox = new ComboBox<>(schichtList);
 
-        // Button zum Löschen des ausgewählten Namens aus der ComboBox
+        // Button for deleting the selected name from the ComboBox
         Button deleteBtn = new Button("Löschen");
         deleteBtn.setOnAction(event -> {
             String selectedName = comboBox.getSelectionModel().getSelectedItem();
@@ -355,14 +407,32 @@ public class MenuButtonController implements Initializable {
                 schichtList.add(name);
                 confirmationLabel.setText("Schicht " + name + " wurde hinzugefügt");
                 textField.clear();
+
+                try {
+                    // Verbindung zur Datenbank herstellen
+                    DatenbankManager dbManager  = new DatenbankManager();
+                    dbManager.connect();
+
+                    // Speichern der schichtList in die Datenbank
+                    // Konvertiere ObservableList zu ArrayList vor dem Speichern
+                    List<String> schichtListAsRegularList = new ArrayList<>(schichtList);
+                    dbManager.saveComboBoxItems("Schicht", "schichtName", schichtListAsRegularList);
+
+                    // Verbindung zur Datenbank trennen
+                    dbManager.disconnect();
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    // Handle the exception properly
+                }
             } else {
-                confirmationLabel.setText("Bitte geben Sie einen Namen der Schicht ein");
+                confirmationLabel.setText("Bitte geben Sie einen Namen ein");
             }
         });
 
         VBox layout = new VBox(10);
         layout.setAlignment(Pos.CENTER);
-        // Fügen Sie das Bestätigungs-Label, Textfeld und den Speichern-Button zum Layout hinzu
+        // Add the confirmation label, text field and save button to the layout
         layout.getChildren().addAll(label, textField, saveBtn, confirmationLabel, schichtLabel, comboBox, deleteBtn);
 
         Scene scene = new Scene(layout, 300, 300);
@@ -372,8 +442,16 @@ public class MenuButtonController implements Initializable {
         isSchichtWindowOpen = true;
 
         stage.setOnCloseRequest(event -> {
-            isSchichtWindowOpen = false; // Setzen Sie den Status auf 'false', wenn das Fenster geschlossen wird
+            isSchichtWindowOpen = false; // Set the status to 'false' when the window is closed
         });
     }
-}
 
+    private void loadComboBoxItemsFromDatabase(DatenbankManager dbManager) throws SQLException {
+        // Daten aus der Datenbank in die ObservableLists laden
+        mitarbeiterList.setAll(dbManager.loadComboBoxItems("Mitarbeiter", "mitarbeiterName"));
+        schichtList.setAll(dbManager.loadComboBoxItems("Schicht", "schichtName"));
+    }
+
+
+
+}

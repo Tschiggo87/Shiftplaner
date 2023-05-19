@@ -13,17 +13,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        // Erstellen Sie hier eine Instanz der DatenbankManager-Klasse
-        DatenbankManager dbManager = new DatenbankManager();
-        try {
-            dbManager.connect();
-            // Führen Sie hier Ihre Datenbankoperationen aus...
-        } catch (SQLException e) {
-            // Behandeln Sie Verbindungsfehler...
-        } finally {
-            dbManager.disconnect();
-        }
-
+        // Laden des FXML-Loaders
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("hello-view.fxml"));
 
         // Laden der FXML-Datei
