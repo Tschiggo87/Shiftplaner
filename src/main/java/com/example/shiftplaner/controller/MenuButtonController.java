@@ -179,21 +179,23 @@ public class MenuButtonController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Verbindung zur Datenbank herstellen methode wird aufgerufen
+        boolean isDataLoaded = false; // Flag-Variable, um zu überprüfen, ob die Daten bereits geladen wurden
+
         try {
             DatenbankManager dbManager = new DatenbankManager();
-            // Verbindung zur Datenbank herstellen
             dbManager.connect();
 
-            // Daten aus der Datenbank laden
-            loadComboBoxItemsFromDatabase(dbManager);
+            if (!isDataLoaded) {
+                // Daten aus der Datenbank laden, wenn sie noch nicht geladen wurden
+                loadComboBoxItemsFromDatabase(dbManager);
+                isDataLoaded = true; // Flag-Variable aktualisieren
+            }
 
-            // Verbindung zur Datenbank trennen
             dbManager.disconnect();
-            //Fehler abfangen
         } catch (SQLException ex) {
-            // Fehlermeldung ausgeben
             ex.printStackTrace();
         }
+
 
 
 
@@ -418,40 +420,49 @@ public class MenuButtonController implements Initializable {
 
         // Button zum Hinzufügen eines Mitarbeiters
         saveBtn.setOnAction(e -> {
-            // Hier wird der Name des Mitarbeiters aus dem Textfeld gelesen
             String name = textField.getText();
-            // Überprüfen Sie, ob ein Name eingegeben wurde
             if (!name.isEmpty()) {
-                // Fügen Sie den Namen der Liste hinzu
-                mitarbeiterList.add(name);
-                // Setzen Sie die Bestätigungsnachricht
-                confirmationLabel.setText("Mitarbeiter " + name + " wurde hinzugefügt");
-                // Löschen Sie den Text aus dem Textfeld
-                textField.clear();
-
-                // Speichern Sie den Namen in der Datenbank
-                try {
-                    // Verbindung zur Datenbank herstellen
-                    DatenbankManager dbManager = new DatenbankManager();
-                    // Verbindung zur Datenbank herstellen
-                    dbManager.connect();
-
-                    // Mitarbeiter in die Datenbank speichern
-                    dbManager.saveComboBoxItems("Mitarbeiter", "mitarbeiterName", mitarbeiterList);
-
-                    // Verbindung zur Datenbank trennen
-                    dbManager.disconnect();
-
-                    // Fehlerbehandlung
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    // Handle the exception properly
+                // Überprüfen, ob der Name bereits in der Mitarbeiterliste vorhanden ist
+                if (mitarbeiterList.contains(name)) {
+                    confirmationLabel.setText("Mitarbeiter " + name + " ist bereits hinzugefügt");
+                } else {
+                    mitarbeiterList.add(name);
+                    confirmationLabel.setText("Mitarbeiter " + name + " wurde hinzugefügt");
+                    textField.clear();
+                    try {
+                        DatenbankManager dbManager = new DatenbankManager();
+                        dbManager.connect();
+                        dbManager.saveComboBoxItems("Mitarbeiter", "mitarbeiterName", mitarbeiterList);
+                        dbManager.disconnect();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                        // Handle the exception properly
+                    }
                 }
             } else {
-                // Setzen Sie die Bestätigungsnachricht
                 confirmationLabel.setText("Bitte geben Sie einen Namen ein");
             }
         });
+
+        // Überprüfen Sie, ob die Mitarbeiterliste noch keine Daten enthält
+        if (mitarbeiterList.isEmpty()) {
+            try {
+                // Verbindung zur Datenbank herstellen
+                DatenbankManager dbManager = new DatenbankManager();
+                // Verbindung zur Datenbank herstellen
+                dbManager.connect();
+
+                // Daten aus der Datenbank in die Mitarbeiterliste laden
+                loadComboBoxItemsFromDatabase(dbManager);
+
+                // Verbindung zur Datenbank trennen
+                dbManager.disconnect();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                // Handle the exception properly
+            }
+        }
 
         // Erstellen Sie ein VBox-Layout
         VBox layout = new VBox(10);
@@ -459,7 +470,7 @@ public class MenuButtonController implements Initializable {
         layout.setAlignment(Pos.CENTER);
         // Fügen Sie das Bestätigungs-Label, Textfeld und den Speichern-Button zum Layout hinzu
         layout.getChildren().addAll(label, textField, saveBtn, confirmationLabel,
-                                    mitarbeiterLabel, comboBox, deleteBtn);
+                mitarbeiterLabel, comboBox, deleteBtn);
 
         // Erstellen Sie eine Szene
         Scene scene = new Scene(layout, 300, 300);
@@ -477,6 +488,7 @@ public class MenuButtonController implements Initializable {
             isMitarbeiterWindowOpen = false; // Setzen Sie den Status auf 'false', wenn das Fenster geschlossen wird
         });
     }
+
 
     // Diese Methode öffnet das Fenster zum Hinzufügen einer Schicht
     public void openAddSchichtWindow() {
