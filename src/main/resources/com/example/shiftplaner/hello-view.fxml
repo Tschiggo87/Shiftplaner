@@ -250,8 +250,8 @@
                            </children>
                         </Pane>
                         <ComboBox fx:id="nameComboBox1" prefWidth="150.0" promptText="Name" GridPane.rowIndex="3" />
-                        <TextField promptText="Spezielles" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <TextField promptText="Spezielles" style="-fx-border-color: none;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField promptText="Spezielles" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <TextField promptText="Spezielles" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                         <TextField promptText="Spezielles" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                         <TextField promptText="Spezielles" GridPane.columnIndex="5" GridPane.rowIndex="1" />

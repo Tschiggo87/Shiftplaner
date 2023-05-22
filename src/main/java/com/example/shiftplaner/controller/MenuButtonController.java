@@ -14,6 +14,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -21,7 +23,10 @@ import java.time.temporal.WeekFields;
 import java.util.*;
 import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
+import java.sql.ResultSet;
+
 import java.util.function.Consumer;
+
 
 //Klasse MenuButtonController, dient zur Steuerung der Menü-Buttons
 public class MenuButtonController implements Initializable {
@@ -39,7 +44,7 @@ public class MenuButtonController implements Initializable {
     private boolean isSchichtWindowOpen = false;
     // Instanzvariable, um das Schichtfenster zu speichern
     private Stage schichtWindow;
-
+    String weekNumber;
 
 
 
@@ -275,7 +280,8 @@ public class MenuButtonController implements Initializable {
 
         // Definiere die Aktionen für die Buttons, um zur nächsten bzw. vorherigen Woche zu navigieren
         saveButton.setOnAction(event -> {
-            // Speichere die Daten in der Datenbank
+            // Speichere die Daten in der
+
 
         });
     }
@@ -606,5 +612,6 @@ public class MenuButtonController implements Initializable {
         // Konvertiere ArrayList zu ObservableList
         schichtList.setAll(dbManager.loadComboBoxItems("Schicht", "schichtName"));
     }
+
 
 }

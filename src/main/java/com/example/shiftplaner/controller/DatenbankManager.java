@@ -1,13 +1,23 @@
 package com.example.shiftplaner.controller;
 
+
+import javafx.scene.control.ComboBox;
+import javafx.scene.layout.Pane;
+
+import java.security.cert.PolicyNode;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DatenbankManager {
     private static final String URL = "jdbc:mysql://lx8.hoststar.hosting/ch355797_shiftplaner";
     private static final String USER = "ch355797_admin";
     private static final String PASSWORD = "Admin_1234";
+
+    private Pane gridPane;
 
     private Connection connection;
 
@@ -49,7 +59,6 @@ public class DatenbankManager {
         }
         insertStatement.close();
     }
-
     public void deleteMitarbeiter(String name) throws SQLException {
         String deleteSQL = "DELETE FROM Mitarbeiter WHERE mitarbeiterName = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL);
@@ -68,4 +77,7 @@ public class DatenbankManager {
             }
         }
     }
+
+
+
 }
